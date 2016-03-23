@@ -1,4 +1,4 @@
-﻿/// <binding AfterBuild='libs, rxjs, templates, appCopy' Clean='clean' />
+﻿/// <binding AfterBuild='default' Clean='clean' />
 var gulp = require('gulp');
 var rimraf = require('rimraf');
 var concat = require('gulp-concat');
@@ -21,6 +21,8 @@ var libs = [
     "scripts/beatcode/scripts/jQuery.js",
     "scripts/beatcode/scripts/jQuery-ui.min.js",
     "scripts/beatcode/scripts/pqgrid.min.js",
+    "scripts/beatcode/scripts/bootstrap.min.js",
+    "scripts/beatcode/scripts/kendo.all.min.js",
 	"scripts/beatcode/beatcode.js",
     paths.npm + "angular2/bundles/angular2.js",
     paths.npm + "angular2/bundles/router.js",

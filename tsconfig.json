@@ -8,7 +8,7 @@
     "module": "system",
     "moduleResolution": "node",
 
-	"project": "foodapp",
+	  "project": "foodapp",
     "rootDir": "./scripts/",
     "outFile": "./foodapp.js",
     "emitDecoratorMetadata": true,
@@ -19,13 +19,15 @@
   "paths": {
     "*": [
       "*",
-      "scripts/*"
+      "scripts/*",
+      "scripts/beatcode/scripts/*"
     ]
   },
   "exclude": [
     "node_modules",
     "wwwroot",
     "dist",
-    "foodapp.d.ts"
+    "foodapp.d.ts",
+    "scripts/beatcode"
   ]
 }

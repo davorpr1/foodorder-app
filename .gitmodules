@@ -1,0 +1,3 @@
+[submodule "scripts/beatcode"]
+	path = scripts/beatcode
+	url = https://github.com/davorpr1/beatcode

@@ -4,7 +4,6 @@
 /// <reference path="../../../scripts/beatcode/typings/kendo-ui/kendo-ui.d.ts" />
 /// <reference path="../../../scripts/beatcode/typings/es6-shim.d.ts" />
 /// <reference path="../../../scripts/beatcode/beatcode.d.ts" />
-/// <reference path="../../../scripts/beatcode/core.d.ts" />
 
 import {Component, provide, Injectable, ElementRef, AfterViewInit, ChangeDetectionStrategy} from 'angular2/core';
 import {FORM_PROVIDERS, NgModel} from 'angular2/common';
@@ -17,7 +16,7 @@ import { LocalStorageService } from 'beatcode/services/local-storage.service';
 import { RhetosRestService } from 'beatcode/services/rhetos-rest.service';
 
 import { PermissionProvider } from 'beatcode/services/permission-provider.service';
-import { IDataStructure, IEntityDataService, OverrideComponentDescriptor, IEntityContainer } from 'beatcode/core';
+import { IDataStructure, IEntityDataService, OverrideComponentDescriptor, IEntityContainer } from 'beatcode/models/interfaces';
 import { ComponentOverridesFactory } from 'beatcode/factories/component-overrides.factory';
 import { DataOverridesFactory } from 'beatcode/factories/data-overrides.factory';
 import { AppSettings } from 'beatcode/app/app.settings';

@@ -1,0 +1,54 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="~/css/jquery-ui.min.css">
+    <link rel="stylesheet" href="~/css/kendo.common.min.css" />
+    <link rel="stylesheet" href="~/css/kendo.rtl.min.css" />
+    <link rel="stylesheet" href="~/css/kendo.default.min.css" />
+    <link rel="stylesheet" href="~/css/kendo.mobile.all.min.css" />
+    <link rel="stylesheet" href="~/css/styles.css" />
+    <link rel="stylesheet" href="~/css/pqgrid.min.css" />
+</head>
+<body>
+    @RenderBody()
+
+    <div id="loader" class="overlay-loader">
+        <div id="global-loader-background" class="loader-background"></div>
+        <img id="global-loader-icon" class="loader-icon spinning-cog" src="~/css/cog11.svg" data-cog="cog11">
+    </div>
+
+    <script src="~/lib/jquery.js"></script>
+    <script src="~/lib/jquery-ui.min.js"></script>
+    <script src="~/lib/bootstrap.min.js"></script>
+    <script src="~/lib/es6-shim.js"></script>
+    <script src="~/lib/system.js"></script>
+    <script src="~/lib/zone.js"></script>
+    <script src="~/lib/moment.js"></script>
+    <script src="~/lib/reflect.js"></script>
+    <script src="~/lib/pqgrid.min.js"></script>
+    <script>
+        System.config({
+            defaultJSExtensions: true,
+            map: {
+                'rxjs': '@Url.Content("~/../../../lib/rxjs")'
+            }
+        });
+        jQuery(window).load(function ($) {
+            jQuery('#global-loader-icon').removeClass('spinning-cog').remove();
+            jQuery('#global-loader-background').delay(800).fadeOut();
+            jQuery('#loader').removeClass('overlay-loader');
+            console.log('loading finished');
+        });
+    </script>
+    <script src="~/lib/angular2.js"></script>
+    <script src="~/lib/http.js"></script>
+    <script src="~/lib/router.js"></script>
+    <script src="~/lib/kendo.all.min.js"></script>
+    <script src="~/lib/beatcode.js"></script>
+    <script src="~/js/foodapp.js"></script>
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>
