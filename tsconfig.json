@@ -1,0 +1,31 @@
+{
+  "compilerOptions": {
+    "removeComments": true,
+    "preserveConstEnums": true,
+    "declaration": true,
+    "sourceMap": false,
+    "target": "es5",
+    "module": "system",
+    "moduleResolution": "node",
+
+	"project": "foodapp",
+    "rootDir": "./scripts/",
+    "outFile": "./foodapp.js",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "noImplicitAny": true
+  },
+  "baseUrl": ".",
+  "paths": {
+    "*": [
+      "*",
+      "scripts/*"
+    ]
+  },
+  "exclude": [
+    "node_modules",
+    "wwwroot",
+    "dist",
+    "foodapp.d.ts"
+  ]
+}
