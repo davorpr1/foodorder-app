@@ -2,11 +2,11 @@
 import { TestLogger } from 'beatcode/services/logger';
 import { Restaurant } from './../../models/restaurant';
 import { IDataStructure, IEmptyConstruct } from 'beatcode/models/interfaces';
-import { KendoGridComponent } from 'beatcode/controls/kendo-grid.control';
+import { GridComponent } from 'beatcode/controls/grid.control';
 
 @Component({
-    directives: [KendoGridComponent],
-    template: `<kendo-grid [entityType]="dataEntity"></kendo-grid>`
+    directives: [GridComponent],
+    template: `<base-grid [entityType]="dataEntity"></base-grid>`
 })
 export class RestaurantListComponent {
     public dataEntity: IEmptyConstruct = Restaurant;
