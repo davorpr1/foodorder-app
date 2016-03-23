@@ -11,7 +11,7 @@ var connect = require('gulp-connect');
 var paths = {
     npm: "./node_modules/",
     lib: "./wwwroot/lib/",
-    componentTemplates: "./wwwroot/components/",
+    componentTemplates: "./wwwroot/templates/",
     compiledTS: "./dist/",
     appjs: "./wwwroot/js/",
 	beatcss: "./scripts/beatcode/wwwroot/css/"
@@ -54,7 +54,7 @@ gulp.task('beatcss', function () {
 });
 
 gulp.task('templates', function () {
-    return gulp.src('./scripts/components/**/*.html').pipe(gulp.dest(paths.componentTemplates));
+    return gulp.src('./scripts/**/*.html').pipe(gulp.dest(paths.componentTemplates));
 });
 
 gulp.task("clean", function (callback) {
@@ -63,6 +63,7 @@ gulp.task("clean", function (callback) {
     rimraf(paths.appjs, dummyFun);
     rimraf(paths.compiledTS, dummyFun);
     rimraf(paths.lib, callback);
+    rimraf(paths.componentTemplates, callback);
 });
 
 gulp.task('default', ['libs', 'templates', 'rxjs', 'appCopy', 'beatcss'], function () {

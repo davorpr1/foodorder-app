@@ -20,7 +20,13 @@ import { IDataStructure, IEntityDataService, OverrideComponentDescriptor, IEntit
 import { ComponentOverridesFactory } from 'beatcode/factories/component-overrides.factory';
 import { DataOverridesFactory } from 'beatcode/factories/data-overrides.factory';
 
-import { RestaurantListComponent } from './../components/restaurant/restaurant-list.component';
+import { RestaurantsComponent } from './../components/restaurant/restaurants.component';
+import { FoodMenusComponent } from './../components/foodmenu/foodmenus.component';
+
+import { RestaurantDetailCustomWebsiteControlComponent } from './../overrides/restaurant-detail-addedControl.component';
+import { RestaurantDetailNameLabelOverrideComponent } from './../overrides/restaurant-detail-nameControl.component';
+import { FoodMenuListEntityListOverrideComponent } from './../overrides/foodmenu-list-entityList.component';
+import { OverrideSaveFoodMenuDetail } from './../overrides/foodmenu-definition.override';
 
 declare var jQuery: JQueryStatic;
 
@@ -42,7 +48,8 @@ declare var jQuery: JQueryStatic;
     `
 })
 @RouteConfig([
-    { path: 'food-app/', name: 'FoodApp', component: RestaurantListComponent, useAsDefault: true }
+    { path: 'restaurants/...', name: 'RestaurantCenter', component: RestaurantsComponent, useAsDefault: true },
+    { path: 'menus/...', name: 'FoodMenuCenter', component: FoodMenusComponent }
 ])
 class FoodAppComponent implements AfterViewInit {
 
@@ -53,6 +60,11 @@ class FoodAppComponent implements AfterViewInit {
     ) {
         AppSettings.API_ENDPOINT = 'http://dprugovecki-pc:8040/FoodRhetos/REST/';
         permissionService.reloadAllAuthorizedClaims();
+
+        let x: any = RestaurantDetailNameLabelOverrideComponent; // just to trigger decorator code
+        x = RestaurantDetailCustomWebsiteControlComponent; // just to trigger decorator code
+        x = FoodMenuListEntityListOverrideComponent; // just to trigger decorator code
+        x = OverrideSaveFoodMenuDetail;
     }
 
     ngAfterViewInit() {
