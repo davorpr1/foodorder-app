@@ -16,10 +16,9 @@ import { LocalStorageService } from 'beatcode/services/local-storage.service';
 import { RhetosRestService } from 'beatcode/services/rhetos-rest.service';
 
 import { PermissionProvider } from 'beatcode/services/permission-provider.service';
-import { IDataStructure, IEntityDataService, OverrideComponentDescriptor, IEntityContainer } from 'beatcode/models/interfaces';
+import { IDataStructure, IEntityDataService, OverrideComponentDescriptor, IEntityContainer, AppSettings } from 'beatcode/core';
 import { ComponentOverridesFactory } from 'beatcode/factories/component-overrides.factory';
 import { DataOverridesFactory } from 'beatcode/factories/data-overrides.factory';
-import { AppSettings } from 'beatcode/app/app.settings';
 
 import { RestaurantListComponent } from './../components/restaurant/restaurant-list.component';
 
@@ -52,8 +51,8 @@ class FoodAppComponent implements AfterViewInit {
         private http: Http,
         private permissionService: PermissionProvider
     ) {
-		AppSettings.API_ENDPOINT = 'http://dprugovecki-pc:8040/FoodRhetos/REST/';
-		permissionService.reloadAllAuthorizedClaims();
+        AppSettings.API_ENDPOINT = 'http://dprugovecki-pc:8040/FoodRhetos/REST/';
+        permissionService.reloadAllAuthorizedClaims();
     }
 
     ngAfterViewInit() {
