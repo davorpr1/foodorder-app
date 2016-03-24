@@ -4,10 +4,7 @@ import { RouteParams, Router, Location } from 'angular2/router';
 import { TestLogger } from 'beatcode/services/logger';
 import { FoodMenu } from './../../models/foodmenu';
 import { Restaurant } from './../../models/restaurant';
-import { DatePickerComponent } from 'beatcode/controls/datepicker.control';
-import { AutocompleteComponent } from 'beatcode/controls/autocomplete.control';
-import { DropdownComponent } from 'beatcode/controls/dropdown.control';
-import { KendoDatePickerComponent } from 'beatcode/controls/kendo-datepicker.control'
+import { DropdownComponent, AutocompleteComponent, DatePickerComponent, KendoDatePickerComponent } from 'beatcode/controls';
 import { IEntityDataService, IEmptyConstruct, IEntityContainer, ChangesCommit, DataChanged, DataChangeType, OverrideDataDefinition } from 'beatcode/models/interfaces';
 import { Observable } from 'rxjs/Observable';
 import { OverrideableDetailComponent } from 'beatcode/components/overrideable.component';

@@ -58,9 +58,6 @@ class FoodAppComponent implements AfterViewInit {
         private http: Http,
         private permissionService: PermissionProvider
     ) {
-        AppSettings.API_ENDPOINT = 'http://dprugovecki-pc:8040/FoodRhetos/REST/';
-        permissionService.reloadAllAuthorizedClaims();
-
         let x: any = RestaurantDetailNameLabelOverrideComponent; // just to trigger decorator code
         x = RestaurantDetailCustomWebsiteControlComponent; // just to trigger decorator code
         x = FoodMenuListEntityListOverrideComponent; // just to trigger decorator code
@@ -86,7 +83,7 @@ export class CORSBrowserXHr extends BrowserXhr {
 bootstrap(FoodAppComponent, [
     RhetosRestService, PermissionProvider, LocalStorageService, ComponentOverridesFactory, IEntityContainer, DataOverridesFactory,
 
-    provide(IEntityDataService, { useClass: RhetosRestService }),
+    provide(IEntityDataService, { useClass: LocalStorageService }),
 
     provide(TestLogger, { useClass: TestLogger }),
     provide(GlobalDataSharing, { useClass: GlobalDataSharing }),

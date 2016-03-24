@@ -2,7 +2,7 @@
 import { TestLogger } from 'beatcode/services/logger';
 import { Restaurant } from './../../models/restaurant';
 import { IDataStructure, IEmptyConstruct } from 'beatcode/models/interfaces';
-import { GridComponent } from 'beatcode/controls/grid.control';
+import { GridComponent } from 'beatcode/controls';
 
 @Component({
     directives: [GridComponent],

@@ -6,9 +6,8 @@ import { TestLogger } from 'beatcode/services/logger';
 import { Restaurant } from './../../models/restaurant';
 import { IEntityDataService, IEntityContainer, IOverrideDetailComponent, ControlDefinition, DataChanged } from 'beatcode/models/interfaces';
 import { OverrideableDetailComponent } from 'beatcode/components/overrideable.component';
-import { GridComponent } from 'beatcode/controls/grid.control';
 import { ComponentOverridesFactory } from 'beatcode/factories/component-overrides.factory';
-import { TextboxComponent } from 'beatcode/controls/textbox.control';
+import { GridComponent, TextboxComponent } from 'beatcode/controls';
 
 
 @Component({

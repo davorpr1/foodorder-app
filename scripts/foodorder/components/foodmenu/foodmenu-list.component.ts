@@ -4,7 +4,7 @@ import { TestLogger } from 'beatcode/services/logger';
 import { FoodMenu } from './../../models/foodmenu';
 import { IDataStructure, IEmptyConstruct } from 'beatcode/core';
 import { OverrideableDetailComponent } from 'beatcode/components/overrideable.component';
-import { GridComponent } from 'beatcode/controls/grid.control';
+import { GridComponent } from 'beatcode/controls';
 import { AppMenuItem, FieldFilter } from 'beatcode/models/interfaces';
 
 @Component({

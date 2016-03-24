@@ -2,7 +2,7 @@
 import { TestLogger } from 'beatcode/services/logger';
 import { OverrideDetailComponent } from 'beatcode/models/interfaces';
 import { RestaurantDetailComponent } from './../components/restaurant/restaurant-detail.component';
-import { SuperTextboxWrapComponent } from 'beatcode/controls/super-textbox.wrap-control';
+import { SuperTextboxWrapComponent } from 'beatcode/controls';
 
 @Component({ template: `` })
 @OverrideDetailComponent({

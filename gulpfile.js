@@ -23,7 +23,6 @@ var libs = [
     "scripts/beatcode/scripts/pqgrid.min.js",
     "scripts/beatcode/scripts/bootstrap.min.js",
     "scripts/beatcode/scripts/kendo.all.min.js",
-	"scripts/beatcode/beatcode.js",
     paths.npm + "angular2/bundles/angular2.js",
     paths.npm + "angular2/bundles/router.js",
     paths.npm + "angular2/bundles/http.js",
@@ -43,14 +42,12 @@ gulp.task("libs", function () {
 
 gulp.task("appCopy", function () {
     gulp.src("foodapp.js").pipe(gulp.dest(paths.appjs));
+    gulp.src(paths.beatcss + '**/*.*').pipe(gulp.dest('./wwwroot/css/'));
+    gulp.src("scripts/beatcode/beatcode.js").pipe(gulp.dest(paths.lib));
 });
 
 gulp.task('rxjs', function () {
     return gulp.src(paths.npm + 'rxjs/**/*.js').pipe(gulp.dest(paths.lib + 'rxjs/'));
-});
-
-gulp.task('beatcss', function () {
-    return gulp.src(paths.beatcss + '**/*.*').pipe(gulp.dest('./wwwroot/css/'));
 });
 
 gulp.task('templates', function () {
@@ -66,7 +63,7 @@ gulp.task("clean", function (callback) {
     rimraf(paths.componentTemplates, callback);
 });
 
-gulp.task('default', ['libs', 'templates', 'rxjs', 'appCopy', 'beatcss'], function () {
+gulp.task('default', ['libs', 'templates', 'rxjs', 'appCopy'], function () {
 	// nothing
 });
 

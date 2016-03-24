@@ -5,8 +5,7 @@ import { FoodMenu } from './../models/foodmenu';
 import { IDataStructure, IEmptyConstruct } from 'beatcode/models/interfaces';
 import { IEntityContainer, IOverrideDetailComponent, OverrideDetailComponent, FieldFilter } from 'beatcode/models/interfaces';
 import { FoodMenuListComponent } from './../components/foodmenu/foodmenu-list.component';
-import { EntityListControl } from 'beatcode/controls/entity-list.control';
-import { KendoGridComponent } from 'beatcode/controls/kendo-grid.control';
+import { KendoGridComponent, EntityListControl } from 'beatcode/controls';
 
 @Component({
     directives: [FORM_DIRECTIVES, EntityListControl, KendoGridComponent],

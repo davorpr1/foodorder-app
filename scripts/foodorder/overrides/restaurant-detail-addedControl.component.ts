@@ -5,7 +5,7 @@ import { Restaurant } from './../models/restaurant';
 import { IEntityContainer, IOverrideDetailComponent, OverrideDetailComponent } from 'beatcode/models/interfaces';
 import { RestaurantDetailComponent } from './../components/restaurant/restaurant-detail.component';
 import { OverrideableDetailComponent } from 'beatcode/components/overrideable.component';
-import { TextboxComponent } from 'beatcode/controls/textbox.control';
+import { TextboxComponent } from 'beatcode/controls';
 
 @Component({
     directives: [FORM_DIRECTIVES],
