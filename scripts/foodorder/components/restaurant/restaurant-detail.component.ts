@@ -19,6 +19,7 @@ import { GridComponent, TextboxComponent } from 'beatcode/controls';
             <br />
             <p>{{entity.Name}}</p>
 <form [ngFormModel]="entityForm" (ngSubmit)="onSubmit()">
+    <div #busyOverlayPlace></div>
     <div #formStart></div>
     <div #nameControl></div>
     <div #addressControl></div>
@@ -76,7 +77,14 @@ export class RestaurantDetailComponent extends OverrideableDetailComponent imple
     }
 
     onSubmit() {
-        this.entityService.updateEntity(Restaurant, this.entity);
+        var myChangeID: string = "Restaurant_Detail_Form_" + (Math.random() * 1000013);
+        this.busy = true;
+        var that = this;
+        this.entityService.dataObserver.subscribe((updatedRestaurants: DataChanged) => {
+            if (updatedRestaurants.ID === myChangeID)
+                that.busy = false;
+        });
+        this.entityService.updateEntity(Restaurant, this.entity, myChangeID);
         // this.router.navigate(['RestaurantList']);
     }
 }

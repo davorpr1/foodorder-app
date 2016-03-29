@@ -1,4 +1,4 @@
-﻿import { Component, View, provide, OnInit, AfterViewInit, NgZone, ApplicationRef } from 'angular2/core';
+﻿import { Component, provide, OnInit, AfterViewInit, NgZone, ApplicationRef } from 'angular2/core';
 import { TestLogger } from 'beatcode/services/logger';
 import { Restaurant } from './../../models/restaurant';
 import { IDataStructure, IEmptyConstruct } from 'beatcode/models/interfaces';

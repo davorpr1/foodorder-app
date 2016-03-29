@@ -1,4 +1,4 @@
-﻿import { Component, View, Input, provide, ViewChild, OnInit, NgZone, ApplicationRef, ElementRef, ComponentRef, Injector, DynamicComponentLoader, EventEmitter, ChangeDetectorRef } from 'angular2/core';
+﻿import { Component, Input, provide, ViewChild, OnInit, NgZone, ApplicationRef, ElementRef, ComponentRef, Injector, DynamicComponentLoader, EventEmitter, ChangeDetectorRef } from 'angular2/core';
 import { RouteParams } from 'angular2/router';
 import { TestLogger } from 'beatcode/services/logger';
 import { FoodMenu } from './../../models/foodmenu';

@@ -1,18 +1,19 @@
 ﻿"use strict";
 
 import { EventEmitter } from 'angular2/core';
-import { Validators, Control } from 'angular2/common';
+import { Validators, AbstractControl } from 'angular2/common';
+import { ValidatorFn } from 'angular2/src/common/forms/directives/validators';
 
 import { BaseEntity } from 'beatcode/models/entitybase';
 import { FieldDefinition, ValidatorDefinition } from 'beatcode/models/interfaces';
 
-function containsCommaValidator(control: Control): { [s: string]: boolean } {
+function containsCommaValidator(control: AbstractControl): { [s: string]: boolean } {
     if (!control.value || !control.value.match(/[A-Za-z0-9 ]\,[ A-Za-z]/)) {
         return { noComma: true };
     }
 }
 
-function urlValidator(control: Control): { [s: string]: boolean } {
+function urlValidator(control: AbstractControl): { [s: string]: boolean } {
     if (!control.value || !control.value.match(/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/)) {
         return { notValidURL: true };
     }

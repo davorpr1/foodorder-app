@@ -1,4 +1,4 @@
-﻿import { Component, View, provide } from 'angular2/core';
+﻿import { Component, provide } from 'angular2/core';
 import { RouteConfig, ROUTER_DIRECTIVES, Router } from 'angular2/router';
 import { TestLogger } from 'beatcode/services/logger';
 import { FoodMenuListComponent } from './foodmenu-list.component';
