@@ -1,4 +1,4 @@
-﻿import { Component, OnInit, DynamicComponentLoader, ElementRef, ComponentRef, Inject, forwardRef } from 'angular2/core';
+﻿import { Component, OnInit, DynamicComponentLoader, ElementRef, ComponentRef, Inject, forwardRef, ChangeDetectorRef } from 'angular2/core';
 import { FORM_DIRECTIVES, FormBuilder, Validators, ControlGroup, AbstractControl, Control, NgFormModel } from 'angular2/common';
 import { TestLogger } from 'beatcode/services/logger';
 import { Restaurant } from './../models/restaurant';
@@ -25,7 +25,7 @@ export class RestaurantDetailCustomWebsiteControlComponent extends OverrideableD
         private elementRef: ElementRef,
         @Inject(forwardRef(() => RestaurantDetailComponent)) private parentComponent: RestaurantDetailComponent
     ) {
-        super(logger, parentComponent.dynamicComponentLoader, parentComponent.injector, elementRef);
+        super(logger, parentComponent.dynamicComponentLoader, parentComponent.injector, elementRef, parentComponent.cd);
         this.customStaticRefID += ++RestaurantDetailCustomWebsiteControlComponent.ID;
 
         logger.log("Restaurant customization initiated!");
@@ -36,6 +36,7 @@ export class RestaurantDetailCustomWebsiteControlComponent extends OverrideableD
         var that = this;
         this.parentComponent.dynamicComponentLoader.loadIntoLocation(TextboxComponent, this.elementRef, 'websiteControl').then((newComp: ComponentRef) => {
             newComp.instance.setParentComponent(that.parentComponent, 'WebSite');
+            that.parentComponent.cd.detectChanges();
         });
     }
 }

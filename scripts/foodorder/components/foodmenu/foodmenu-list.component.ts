@@ -1,4 +1,4 @@
-﻿import { Component, View, Input, provide, ViewChild, OnInit, NgZone, ApplicationRef, ElementRef, ComponentRef, Injector, DynamicComponentLoader, EventEmitter } from 'angular2/core';
+﻿import { Component, View, Input, provide, ViewChild, OnInit, NgZone, ApplicationRef, ElementRef, ComponentRef, Injector, DynamicComponentLoader, EventEmitter, ChangeDetectorRef } from 'angular2/core';
 import { RouteParams } from 'angular2/router';
 import { TestLogger } from 'beatcode/services/logger';
 import { FoodMenu } from './../../models/foodmenu';
@@ -42,9 +42,10 @@ export class FoodMenuListComponent extends OverrideableDetailComponent implement
         routeParams: RouteParams,
         public dynamicComponentLoader: DynamicComponentLoader,
         public injector: Injector,
-        public elementRef: ElementRef
+        public elementRef: ElementRef,
+        private cd: ChangeDetectorRef
     ) {
-        super(logger, dynamicComponentLoader, injector, elementRef);
+        super(logger, dynamicComponentLoader, injector, elementRef, cd);
         var restID: string = routeParams.get("restaurantid");
         if (restID && restID.length > 0) this.restaurantID = restID; 
 

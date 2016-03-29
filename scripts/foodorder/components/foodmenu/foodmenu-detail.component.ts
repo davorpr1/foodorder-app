@@ -14,7 +14,7 @@ import { OverrideableDetailComponent } from 'beatcode/components/overrideable.co
     templateUrl: `./../templates/foodorder/components/foodmenu/foodmenu-detail.html`
 })
 @Injectable()
-export class FoodMenuDetailComponent extends OverrideableDetailComponent implements IEntityContainer, OnInit, OnDestroy {
+export class FoodMenuDetailComponent extends OverrideableDetailComponent implements IEntityContainer, OnDestroy {
     private _id: string;
     public entity: FoodMenu = new FoodMenu();
     public entityForm: ControlGroup;
@@ -37,7 +37,7 @@ export class FoodMenuDetailComponent extends OverrideableDetailComponent impleme
         private changeDetector: ChangeDetectorRef,
         private location: Location)
     {
-        super(logger, dynamicComponentLoader, injector, elementRef);
+        super(logger, dynamicComponentLoader, injector, elementRef, changeDetector);
         this._id = routeParams.get("id");
 
         this.entityService.dataObserver.subscribe((updatedFoodMenus: DataChanged) => {
@@ -66,15 +66,9 @@ export class FoodMenuDetailComponent extends OverrideableDetailComponent impleme
             ActiveUntilDate: ["", Validators.required],
             RestaurantID: ["", Validators.required]
         });
-
+        this.entityService.registerNewChangesStream(this.formSubmitted);
         
         logger.log("FoodMenu detail initiated!");
-    }
-
-    ngOnInit() {
-        super.ngOnInit();
-        var that = this;
-        this.entityService.registerNewChangesStream(that.formSubmitted);
     }
 
     ngOnDestroy() {
