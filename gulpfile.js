@@ -7,6 +7,15 @@ var sourcemaps = require("gulp-sourcemaps");
 var rename = require("gulp-rename");
 var exec = require('child_process').exec;
 var connect = require('gulp-connect');
+var chokidar = require('chokidar');
+var batch = require('gulp-batch');
+// var gcallback = require('gulp-callback')
+
+var compileTS = require('gulp-typescript');
+var projects = [
+        {name: 'beatcode', files: 'scripts/beatcode/scripts/beatcode', project: compileTS.createProject('scripts/beatcode/tsconfig.json'), rootDir: 'scripts/beatcode/'},
+        {name: 'foodapp', files: 'scripts/foodorder', project: compileTS.createProject('tsconfig.json'), rootDir: ''}
+];
 
 var paths = {
     npm: "./node_modules/",
@@ -36,14 +45,69 @@ var libs = [
     paths.npm + "ng2-bootstrap/bundles/ng2-bootstrap.js"
 ];
 
+var lastChangeID = 1;
+var busyBuild = false;
+
+function buildProject(tsProject, path, cb) {
+    lastChangeID++;
+    var currChange = lastChangeID;
+    setTimeout(function() {
+        if (currChange == lastChangeID && !busyBuild) {
+            busyBuild = true;
+            log(`Build of ${tsProject.name} initiated from ${path}`);
+            exec('cd "' + tsProject.rootDir  + '" & ' + 'tsc', function (err, stdout, stderr) {
+                console.log(stdout);
+                console.log(stderr);
+                if (cb) {
+                    cb(tsProject.name);
+                }
+                log(`Build of ${tsProject.name} completed`);
+                busyBuild = false;
+            });
+/*            tsProject.project.src().pipe(compileTS(tsProject.project))
+                .js
+                .pipe(gulp.dest('output'))
+                .pipe(gcallback(function() {
+                    if (cb) {
+                        cb(tsProject.name);
+                    }
+                    log(`Build of ${tsProject.name} completed`);
+                    busyBuild = false;
+                }));
+*/
+        }
+    }, 1000);
+}
+
+gulp.task('compile-ts', function() {
+    return projects.map(tsProject => { buildProject(tsProject, 'compile-ts') });
+});
+
+var log = console.log.bind(console);
+
+function watchInner(cb) {
+    projects.map(tsProject => {
+        chokidar.watch(tsProject.files + '/**/*.ts')
+            .on('add', path => buildProject(tsProject, path, cb))
+            .on('change', path => buildProject(tsProject, path, cb));
+    });
+}
+
+gulp.task('watcher', function () {
+    watchInner();
+});
+
 gulp.task("libs", function () {
     gulp.src(libs).pipe(gulp.dest(paths.lib));
 });
 
 gulp.task("appCopy", function () {
     gulp.src("foodapp.js").pipe(gulp.dest(paths.appjs));
-    gulp.src(paths.beatcss + '**/*.*').pipe(gulp.dest('./wwwroot/css/'));
     gulp.src("scripts/beatcode/beatcode.js").pipe(gulp.dest(paths.lib));
+    gulp.src(paths.beatcss + '**/*.*').pipe(gulp.dest('./wwwroot/css/'));
+});
+
+gulp.task("appCopyWithCompile", ['compile-ts', 'appCopy'], function () {
 });
 
 gulp.task('rxjs', function () {
@@ -70,16 +134,35 @@ gulp.task('default', ['libs', 'templates', 'rxjs', 'appCopy'], function () {
 gulp.task('webserver', function() {
   connect.server({
     root: 'wwwroot',
-	port: 8888,
-    livereload: true
+	port: 8888
   });
 });
 
-gulp.task('html', function () {
-  gulp.src('./wwwroot/*.html')
+gulp.task('webserver-live', function() {
+  connect.server({
+    root: 'wwwroot',
+    port: 8888,
+    livereload: true
+  });
+  // gulp.start('watch-wwwroot');
+  watchInner(function(projectName) {
+    gulp.start('appCopy', function () {
+        log('AppCopy completed');
+    });
+  });
+});
+
+gulp.task('htmlreload', function () {
+  gulp.src('./wwwroot/**/*.html')
     .pipe(connect.reload());
 });
- 
-gulp.task('watch', function () {
-  gulp.watch(['./wwwroot/*.html'], ['html']);
+
+gulp.task('jsreload', function () {
+  gulp.src('./wwwroot/**/*.js')
+    .pipe(connect.reload());
+});
+
+gulp.task('watch-wwwroot', function () {
+  gulp.watch(['./wwwroot/**/*.html'], ['htmlreload']);
+  gulp.watch(['./wwwroot/**/*.js'], ['jsreload']);
 });
