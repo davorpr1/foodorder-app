@@ -29,7 +29,7 @@ export class Restaurant extends BaseEntity {
 
     public ID: string;
 
-    browseFields: Array<FieldDefinition> = [
+    public browseFields: Array<FieldDefinition> = [
         { Name: "Name", Pipe: "", DataType: "string" },
         { Name: "Address", Pipe: "", DataType: "string" },
         { Name: "WebSite", Pipe: "", DataType: "string" }

@@ -9,6 +9,8 @@ var exec = require('child_process').exec;
 var connect = require('gulp-connect');
 var chokidar = require('chokidar');
 var batch = require('gulp-batch');
+var http = require('http');
+var fs = require('fs');
 // var gcallback = require('gulp-callback')
 
 var compileTS = require('gulp-typescript');
@@ -139,11 +141,51 @@ gulp.task('webserver', function() {
 });
 
 gulp.task('webserver-live', function() {
-  connect.server({
-    root: 'wwwroot',
-    port: 8888,
-    livereload: true
-  });
+    connect.server({
+        root: 'wwwroot',
+        port: 8888,
+        livereload: true
+    });
+    http.createServer(function (req, res) {
+        var method = req.method;
+        var body = [];
+        var headers = {
+                        'Content-Type': 'application/json',
+                        'Access-Control-Allow-Origin': 'http://localhost:8888',
+                        'Access-Control-Allow-Methods': 'POST, GET, OPTIONS',
+                        'Access-Control-Allow-Credentials': 'true',
+                        'Access-Control-Allow-Headers': 'Content-Type, Authorization, Accept'
+                    };
+                    
+        if (method == "POST") {
+            req.on('data', function(chunk) {
+                body.push(chunk);
+            }).on('end', function() {
+                body = Buffer.concat(body).toString();
+                res.writeHead(200, headers);
+                res.end('Saved!');
+                fs.writeFile('localStorage.dat', body);
+                log(body);
+            });
+        } else if (method == "OPTIONS") {
+            res.writeHead(200, headers);
+            res.end('');
+            log('CORS option request');
+        } else {
+            fs.readFile('localStorage.dat', (err, data) =>  {
+                if (err) {
+                    res.writeHead(400, headers);
+                    res.end(err.message);
+                    log(err.message);
+                } else {
+                    res.writeHead(200, headers);
+                    res.end(data);
+                    log('Local data storage requested and sent!');
+                }
+            });
+        }
+    }).listen(3456);
+
   // gulp.start('watch-wwwroot');
   watchInner(function(projectName) {
     gulp.start('appCopy', function () {

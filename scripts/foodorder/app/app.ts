@@ -58,6 +58,7 @@ class FoodAppComponent implements AfterViewInit {
         private http: Http,
         private permissionService: PermissionProvider
     ) {
+        AppSettings.API_ENDPOINT = "http://localhost:3456";
         let x: any = RestaurantDetailNameLabelOverrideComponent; // just to trigger decorator code
         x = RestaurantDetailCustomWebsiteControlComponent; // just to trigger decorator code
         x = FoodMenuListEntityListOverrideComponent; // just to trigger decorator code
