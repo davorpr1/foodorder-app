@@ -29,8 +29,8 @@
   },
 
   "commands": {
-    "weblistener": "Microsoft.AspNet.Server.WebListener --server.urls=http://*:3000/",
-    "web": "Microsoft.AspNet.Server.Kestrel --server.urls=http://*:3000/"
+    "weblistener": "Microsoft.AspNet.Server.WebListener --server.urls=http://*:8888/",
+    "web": "Microsoft.AspNet.Server.Kestrel --server.urls=http://*:8888/"
   },
 
   "frameworks": {

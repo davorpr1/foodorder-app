@@ -7,9 +7,21 @@ using Microsoft.Extensions.Logging;
 using FoodOrder;
 using Microsoft.AspNet.Http.Features;
 using Microsoft.Net.Http.Server;
+using System.Threading.Tasks;
+using Microsoft.AspNet.Http;
+using System.Net.Http;
+using System.IO;
 
 namespace foodorder_app
 {
+    public class AppSettings {
+        public static IConfigurationSection Configuration;
+
+        public static string Get(string key) {
+            return AppSettings.Configuration.GetSection(key).Value;
+        }
+    }
+
     public class Startup
     {
         public Startup(IHostingEnvironment env)
@@ -43,7 +55,8 @@ namespace foodorder_app
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
-            
+            AppSettings.Configuration = Configuration.GetSection("Settings");
+
             var listener = app.ServerFeatures.Get<Microsoft.Net.Http.Server.WebListener>();
             if (listener != null)
             {
@@ -65,7 +78,7 @@ namespace foodorder_app
             app.UseDefaultFiles();
 
             app.UseStaticFiles();
-
+            
             app.Map("/api", appProxy =>
             {
                 appProxy.RunRhetosProxy(new ProxyOptions
@@ -81,7 +94,8 @@ namespace foodorder_app
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Home}/{action=Index}/{id?}"
+                );
             });
 
         }

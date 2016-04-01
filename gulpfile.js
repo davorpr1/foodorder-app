@@ -56,14 +56,14 @@ function buildProject(tsProject, path, cb) {
     setTimeout(function() {
         if (currChange == lastChangeID && !busyBuild) {
             busyBuild = true;
-            log(`Build of ${tsProject.name} initiated from ${path}`);
+            log('Build of ${tsProject.name} initiated from ${path}');
             exec('cd "' + tsProject.rootDir  + '" & ' + 'tsc', function (err, stdout, stderr) {
                 console.log(stdout);
                 console.log(stderr);
                 if (cb) {
                     cb(tsProject.name);
                 }
-                log(`Build of ${tsProject.name} completed`);
+                log('Build of ${tsProject.name} completed');
                 busyBuild = false;
             });
 /*            tsProject.project.src().pipe(compileTS(tsProject.project))
@@ -82,16 +82,16 @@ function buildProject(tsProject, path, cb) {
 }
 
 gulp.task('compile-ts', function() {
-    return projects.map(tsProject => { buildProject(tsProject, 'compile-ts') });
+    return projects.map(function (tsProject) { buildProject(tsProject, 'compile-ts') });
 });
 
 var log = console.log.bind(console);
 
 function watchInner(cb) {
-    projects.map(tsProject => {
+    projects.map(function (tsProject) {
         chokidar.watch(tsProject.files + '/**/*.ts')
-            .on('add', path => buildProject(tsProject, path, cb))
-            .on('change', path => buildProject(tsProject, path, cb));
+            .on('add', function (path) { buildProject(tsProject, path, cb); } )
+            .on('change', function (path) { buildProject(tsProject, path, cb); } );
     });
 }
 
@@ -141,11 +141,11 @@ gulp.task('webserver', function() {
 });
 
 gulp.task('webserver-live', function() {
-    connect.server({
+    /*connect.server({
         root: 'wwwroot',
         port: 8888,
         livereload: true
-    });
+    });*/
     http.createServer(function (req, res) {
         var method = req.method;
         var body = [];
@@ -172,7 +172,7 @@ gulp.task('webserver-live', function() {
             res.end('');
             log('CORS option request');
         } else {
-            fs.readFile('localStorage.dat', (err, data) =>  {
+            fs.readFile('localStorage.dat', function (err, data) {
                 if (err) {
                     res.writeHead(400, headers);
                     res.end(err.message);
@@ -187,11 +187,11 @@ gulp.task('webserver-live', function() {
     }).listen(3456);
 
   // gulp.start('watch-wwwroot');
-  watchInner(function(projectName) {
+/*  watchInner(function(projectName) {
     gulp.start('appCopy', function () {
         log('AppCopy completed');
     });
-  });
+  });*/
 });
 
 gulp.task('htmlreload', function () {
