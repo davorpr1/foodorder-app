@@ -13,12 +13,16 @@ import { FoodMenuListComponent } from './../foodmenu/foodmenu-list.component';
     directives: [RestaurantDetailComponent, FoodMenuListComponent],
     template: `<table><tr>
             <td>First instance  <restaurant-detail [entityID]="entID" #restaurant></restaurant-detail></td>
-            <td>Second instance <restaurant-detail [entityID]="entID"></restaurant-detail>
-            </td></tr>
+            <td>Second instance <restaurant-detail [entityID]="entID"></restaurant-detail></td>
+            <td>Third instance <restaurant-detail [entityID]="entID"></restaurant-detail></td>
+            <td>Fourth instance <restaurant-detail [entityID]="entID"></restaurant-detail></td>
+            </tr>
            </table>
-            All menu of restaurant {{ restaurant.entity.Name }}
-            <foodmenu-list [restaurantID]="restaurant.entity.ID"></foodmenu-list>            
-            End of dual view`
+            <div *ngIf="restaurant.entity.ID">
+                All menus for restaurant {{ restaurant.entity.Name }}
+                <foodmenu-list [restaurantID]="restaurant.entity.ID"></foodmenu-list>            
+                End of dual view
+            </div>`
 })
 export class RestaurantWrapperComponent {
     private entID: string = "";

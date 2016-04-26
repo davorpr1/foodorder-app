@@ -1,5 +1,5 @@
 ﻿import { Component, OnInit, DynamicComponentLoader, ElementRef, ComponentRef, Injectable, Input, Injector, Provider, provide, ChangeDetectorRef } from 'angular2/core';
-import { FORM_DIRECTIVES, FormBuilder, Validators, ControlGroup, AbstractControl, NgFormModel } from 'angular2/common';
+import { FORM_DIRECTIVES, FormBuilder, Validators, ControlGroup, AbstractControl, NgFormModel, NgForm } from 'angular2/common';
 import { Http, HTTP_PROVIDERS, Response, Request, RequestOptions, RequestMethod, Headers, BrowserXhr } from 'angular2/http';
 import { RouteConfig, ROUTER_DIRECTIVES, RouteParams, Router } from 'angular2/router';
 import { TestLogger } from 'beatcode/services/logger';
@@ -8,7 +8,7 @@ import { IEntityDataService, IEntityContainer, IOverrideDetailComponent, Control
 import { OverrideableDetailComponent } from 'beatcode/components/overrideable.component';
 import { ComponentOverridesFactory } from 'beatcode/factories/component-overrides.factory';
 import { GridComponent, TextboxComponent } from 'beatcode/controls';
-
+import { Observable } from 'rxjs/Rx';
 
 @Component({
     directives: [FORM_DIRECTIVES],
@@ -29,7 +29,7 @@ import { GridComponent, TextboxComponent } from 'beatcode/controls';
         `
 })
 @Injectable()
-export class RestaurantDetailComponent extends OverrideableDetailComponent implements IEntityContainer {
+export class RestaurantDetailComponent extends OverrideableDetailComponent implements IEntityContainer, OnInit {
     @Input() private entityID: string;
     public entity: Restaurant = new Restaurant();
     public controls: Array<ControlDefinition> = [
@@ -81,10 +81,20 @@ export class RestaurantDetailComponent extends OverrideableDetailComponent imple
         this.busy = true;
         var that = this;
         this.entityService.dataObserver.subscribe((updatedRestaurants: DataChanged) => {
-            if (updatedRestaurants.ID === myChangeID)
+            if (updatedRestaurants.ID === myChangeID) {
                 that.busy = false;
+                that.router.navigate(['RestaurantList']);
+            }
         });
         this.entityService.updateEntity(Restaurant, this.entity, myChangeID);
-        // this.router.navigate(['RestaurantList']);
+    }
+    
+    ngOnInit() {
+        super.ngOnInit();
+        Observable.fromEvent(this.elementRef.nativeElement, 'mousemove')
+            .debounceTime(500)
+            .subscribe(function (e: MouseEvent) {
+                console.log('ClientX: %d, ClientY: %d', e.clientX, e.clientY);
+            });
     }
 }

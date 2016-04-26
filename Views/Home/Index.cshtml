@@ -4,6 +4,8 @@
 @section scripts
 {
     <script>
-            System.import('foodorder/app/app').catch(console.log.bind(console));
+        System.import('foodorder/app/app').then(function (app) {
+            app.FoodAppComponent.bootstrapApp();
+        });
     </script>
 }

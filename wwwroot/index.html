@@ -13,7 +13,7 @@
 </head>
 <body>
 	<food-app></food-app>
-
+    
     <div id="loader" class="overlay-loader">
         <div id="global-loader-background" class="loader-background"></div>
         <img id="global-loader-icon" class="loader-icon spinning-cog" src="css/cog11.svg" data-cog="cog11">
@@ -51,7 +51,9 @@
     <script src="lib/beatcode.js"></script>
     <script src="js/foodapp.js"></script>
 	<script>
-            System.import('foodorder/app/app').catch(console.log.bind(console));
+        System.import('foodorder/app/app').then(function (app) {
+            app.FoodAppComponent.bootstrapApp();
+        });
     </script>
 </body>
 </html>

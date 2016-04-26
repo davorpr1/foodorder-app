@@ -1,7 +1,7 @@
 ﻿<h3>Food menu details</h3>
 <br />
 <p>{{entity.Name}}</p>
-<form [ngFormModel]="entityForm" (ngSubmit)="onSubmit()">
+<form [ngFormModel]="entityForm">
     <div #busyOverlayPlace></div>
     <div class="form-group">
         <label for="Name">Name</label>
@@ -34,5 +34,5 @@
     <div *ngIf="!entityForm.valid && entityForm.dirty"
          class="alert alert-danger">Food menu data is not valid</div>
 
-    <button type="submit" class="btn btn-default" [disabled]="!entityForm.valid">Submit</button>
+    <button class="btn btn-default" [disabled]="!entityForm.valid" #submitButton>Submit</button>
 </form>

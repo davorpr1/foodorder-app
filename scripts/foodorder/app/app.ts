@@ -2,10 +2,10 @@
 /// <reference path="../../../scripts/beatcode/typings/jqueryui/jqueryui.d.ts" />
 /// <reference path="../../../scripts/beatcode/typings/moment.d.ts" />
 /// <reference path="../../../scripts/beatcode/typings/kendo-ui/kendo-ui.d.ts" />
-/// <reference path="../../../scripts/beatcode/typings/es6-shim.d.ts" />
 /// <reference path="../../../scripts/beatcode/beatcode.d.ts" />
 
-import {Component, provide, Injectable, ElementRef, AfterViewInit, ChangeDetectionStrategy} from 'angular2/core';
+
+import {Component, provide, Injectable, ElementRef, AfterViewInit, ChangeDetectionStrategy, EventEmitter} from 'angular2/core';
 import {FORM_PROVIDERS, NgModel} from 'angular2/common';
 import { RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS, Router, HashLocationStrategy, LocationStrategy } from 'angular2/router';
 import { Http, HTTP_PROVIDERS, Response, Request, RequestOptions, RequestMethod, Headers, BrowserXhr } from 'angular2/http';
@@ -16,9 +16,10 @@ import { LocalStorageService } from 'beatcode/services/local-storage.service';
 import { RhetosRestService } from 'beatcode/services/rhetos-rest.service';
 
 import { PermissionProvider } from 'beatcode/services/permission-provider.service';
-import { IDataStructure, IEntityDataService, OverrideComponentDescriptor, IEntityContainer, AppSettings } from 'beatcode/core';
+import { IDataStructure, IEntityDataService, OverrideComponentDescriptor, IEntityContainer, AppSettings, AppComponent } from 'beatcode/core';
 import { ComponentOverridesFactory } from 'beatcode/factories/component-overrides.factory';
 import { DataOverridesFactory } from 'beatcode/factories/data-overrides.factory';
+import { CORSBrowserXHr } from 'beatcode/models/interfaces';
 
 import { RestaurantsComponent } from './../components/restaurant/restaurants.component';
 import { FoodMenusComponent } from './../components/foodmenu/foodmenus.component';
@@ -27,12 +28,24 @@ import { RestaurantDetailCustomWebsiteControlComponent } from './../overrides/re
 import { RestaurantDetailNameLabelOverrideComponent } from './../overrides/restaurant-detail-nameControl.component';
 import { FoodMenuListEntityListOverrideComponent } from './../overrides/foodmenu-list-entityList.component';
 import { OverrideSaveFoodMenuDetail } from './../overrides/foodmenu-definition.override';
+import { Observable } from 'rxjs/rx';
 
 declare var jQuery: JQueryStatic;
 
-@Component({
+@AppComponent({
     selector: "food-app",
     directives: [ROUTER_DIRECTIVES, MenuComponent],
+    providers: [
+        RhetosRestService, PermissionProvider, LocalStorageService, ComponentOverridesFactory, IEntityContainer, DataOverridesFactory,
+
+        provide(IEntityDataService, { useClass: LocalStorageService }),
+
+        provide(TestLogger, { useClass: TestLogger }),
+        provide(GlobalDataSharing, { useClass: GlobalDataSharing }),
+        HTTP_PROVIDERS, ROUTER_PROVIDERS, FORM_PROVIDERS, NgModel,
+        provide(BrowserXhr, { useClass: CORSBrowserXHr }),
+        provide(LocationStrategy, { useClass: HashLocationStrategy })
+    ],    
     template: `
 	<app-menu></app-menu>
     <div class="container body-content">
@@ -51,7 +64,7 @@ declare var jQuery: JQueryStatic;
     { path: 'restaurants/...', name: 'RestaurantCenter', component: RestaurantsComponent, useAsDefault: true },
     { path: 'menus/...', name: 'FoodMenuCenter', component: FoodMenusComponent }
 ])
-class FoodAppComponent implements AfterViewInit {
+export class FoodAppComponent implements AfterViewInit {
 
     constructor(private m_elementRef: ElementRef,
         private logger: TestLogger,
@@ -63,24 +76,16 @@ class FoodAppComponent implements AfterViewInit {
         x = RestaurantDetailCustomWebsiteControlComponent; // just to trigger decorator code
         x = FoodMenuListEntityListOverrideComponent; // just to trigger decorator code
         x = OverrideSaveFoodMenuDetail;
+        var that = this;
     }
-
+    
     ngAfterViewInit() {
         this.logger.log("Application initialized!");
     }
     
 }
 
-@Injectable()
-export class CORSBrowserXHr extends BrowserXhr {
-
-    build(): any {
-        var x: any = super.build();
-        x['withCredentials'] = true;
-        return x;
-    }
-}
-
+/*
 bootstrap(FoodAppComponent, [
     RhetosRestService, PermissionProvider, LocalStorageService, ComponentOverridesFactory, IEntityContainer, DataOverridesFactory,
 
@@ -92,3 +97,4 @@ bootstrap(FoodAppComponent, [
     provide(BrowserXhr, { useClass: CORSBrowserXHr }),
     provide(LocationStrategy, { useClass: HashLocationStrategy })
 ]);
+*/
